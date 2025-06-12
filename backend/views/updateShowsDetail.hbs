@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Shows Details</title>
+    <link rel="icon" href="./logo.png">
+    <link rel="stylesheet" href="/addShows.css">
+</head>
+<body>
+    <!-- Dashboard Link -->
+    <a href="/" class="dashboard-link">
+        <i class="icon-home"></i> Go to Dashboard
+    </a>
+
+    <!-- Page Title -->
+    <h1 class="page-title">Update Shows Details</h1>
+
+    <!-- Movie Details Section -->
+    <div class="shows-details-container">
+        <div class="poster-container">
+            <img src="{{showsDetails.posterPath}}" alt="Show Poster" class="poster">
+        </div>
+
+        <div class="detail-text-container">
+            <h2 class="show-title">{{showsDetails.name}}</h2>
+            <p class="show-overview">{{showsDetails.overview}}</p>
+            <p class="show-info">{{showsDetails.releaseDate}} • {{showsDetails.genres}} • {{showsDetails.ratings}}/10</p>
+        </div>
+    </div>
+
+
+    {{#each showsDetails.seasons}}
+    <div class="season-container">
+        <h3 class="season-title">Season {{this.seasons_number}}</h3>
+        <div>
+
+            {{#each this.episodes}}
+            <div class="episode-details-container">
+            
+                {{#if this.poster}}
+                <div class="episode-poster-container">
+                    <img src={{this.poster}} alt="Episode Poster" class="episode-poster">
+                </div>
+                {{/if}}
+                <div class="episode-text-container">
+                    <strong>Episode {{this.episode_number}}:</strong> {{this.name}} ({{this.runtime}} mins)
+                    <p>{{this.overview}}</p>
+                
+                    <label for="episodeDownloadLink">Download Link:</label>
+                    <input type="text" id="edl{{../season_number}}{{this.episode_number}}" 
+                       name="edl{{../season_number}}{{this.episode_number}}" 
+                       value="{{this.downloadLink}}" 
+                       placeholder="Enter download link" class="download-link-input" />
+            </div>
+        </div>
+        {{/each}}
+        </div>
+    </div>
+    {{/each}}
+
+    <button class="submit-btn" type="button" onclick="submitShowsDetails()">Update Shows</button>
+
+    {{#if errorMessage}}
+    <div class="popup-error-message">
+    {{errorMessage}}
+    </div>
+    {{/if}}
+
+    {{#if successMessage}}
+    <div class="popup-success-messagee">
+    {{successMessage}}
+    </div>
+    {{/if}}
+
+
+
+</body>
+<script>
+    function submitShowsDetails() {
+        var showsDetailsData = {
+                showDetails: {
+                    poster_path: "{{showsDetails.posterPath}}",
+                    backdrop_path: "{{showsDetails.backdropPath}}",
+                    name: "{{showsDetails.name}}",
+                    overview: "{{showsDetails.overview}}",
+                    first_air_date: "{{showsDetails.releaseDate}}",
+                    genres: "{{showsDetails.genres}}",
+                    vote_average: "{{showsDetails.ratings}}",
+                },
+                seasons: []
+            };
+            {{#each showsDetails.seasons}}
+                    var seasonData = {
+                        season_number: "{{this.season_number}}",
+                        episodes: []
+                    };
+
+                    {{#each this.episodes}}
+                        var episodeData = {
+                            episode_number: "{{this.episode_number}}",
+                            name: "{{this.name}}",
+                            runtime: "{{this.runtime}}",
+                            overview: "{{this.overview}}",
+                            poster: "{{this.poster}}",
+                            downloadLink: document.getElementById("edl{{../season_number}}{{this.episode_number}}").value
+                    };
+
+                    seasonData.episodes.push(episodeData);
+                    {{/each}}
+
+                    showsDetailsData.seasons.push(seasonData);
+            {{/each}}
+
+            fetch('/update-show/{{showsDetails._id}}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(showsDetailsData),
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Sucess:', data);
+                if (data.success) {
+                    alert("Show details added successfully");
+                } else {
+                    alert("Failed to add show details: " + data.message);
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+    
+    }
+</script>
+</html>

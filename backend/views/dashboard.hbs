@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WatchFlix Admin Dashboard</title>
+    <link rel="icon" href="logo.png">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #141414;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .dashboard {
+            width: 90%;
+            max-width: 1200px;
+        }
+
+        .dashboard-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .dashboard-header h1 {
+            font-size: 3rem;
+            color: #e50914;
+            margin: 0;
+        }
+
+        .dashboard-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .action-row {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .action-card {
+            background-color: #222;
+            border-radius: 10px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .action-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .action-card img {
+            width: 50px;
+            height: 50px;
+            margin-bottom: 1rem;
+        }
+
+        .action-card a {
+            text-decoration: none;
+            color: #fff;
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+
+        .action-card a:hover {
+            color: #e50914;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <div class="dashboard-header">
+            <h1>WatchFlix Admin Dashboard</h1>
+        </div>
+        <div class="dashboard-actions">
+            <div class="action-row">
+                <div class="action-card">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2910/2910768.png" alt="Add Movie Icon">
+                    <a href="/addMovieRoute">Add Movie</a>
+                </div>
+                <div class="action-card">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2910/2910772.png" alt="Update Movie Icon">
+                    <a href="/updateMovieRoute">Update Movie</a>
+                </div>
+                <div class="action-card">
+                    <img src="https://cdn-icons-png.flaticon.com/512/1828/1828843.png" alt="Delete Movie Icon">
+                    <a href="/deleteMovieRoute">Delete Movie</a>
+                </div>
+                <div class="action-card">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2910/2910783.png" alt="Scan Movies Icon">
+                    <a href="/scanAllMovies">Scan All Movies</a>
+                </div>
+            </div>
+            <div class="action-row">
+                <div class="action-card">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2910/2910768.png" alt="Add Show Icon">
+                    <a href="/addShowsRoute">Add Show</a>
+                </div>
+                <div class="action-card">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2910/2910772.png" alt="Update Show Icon">
+                    <a href="/updateShowsRoute">Update Show</a>
+                </div>
+                <div class="action-card">
+                    <img src="https://cdn-icons-png.flaticon.com/512/1828/1828843.png" alt="Delete Show Icon">
+                    <a href="/deleteShowsRoute">Delete Show</a>
+                </div>
+                <div class="action-card">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2910/2910783.png" alt="Scan Shows Icon">
+                    <a href="/scanAllShows">Scan All Shows</a>
+                </div>
+            </div>
+            <div class="action-row">
+                <div class="action-card">
+                    <img src="https://cdn-icons-png.flaticon.com/512/3320/3320370.png" alt="Server Status Icon">
+                    <a href="/">Server Status</a>
+                </div>
+                <div class="action-card">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2910/2910773.png" alt="Restart Icon">
+                    <a href="/restart">Restart Server</a>
+                </div>
+                <div class="action-card">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2910/2910778.png" alt="Poweroff Icon">
+                    <a href="/poweroff">Poweroff Server</a>
+                </div>
+                <div class="action-card">
+                    <img src="https://cdn-icons-png.flaticon.com/512/1828/1828479.png" alt="Logout Icon">
+                    <a href="/admin/logout">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

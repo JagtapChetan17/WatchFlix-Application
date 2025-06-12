@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Movie List</title>
+    <link rel="icon" href="./logo.png">
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #141414;
+            color: #ffffff;
+        }
+
+        h1 {
+            text-align: center;
+            margin: 20px 0;
+            color: #e50914;
+        }
+
+        .search-container {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .search-container input {
+            padding: 10px;
+            width: 300px;
+            border: 1px solid #555;
+            border-radius: 4px;
+            background-color: #333;
+            color: #fff;
+        }
+
+        .search-container button {
+            padding: 10px 20px;
+            margin-left: 10px;
+            border: none;
+            background-color: #e50914;
+            color: #fff;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .search-container button:hover {
+            background-color: #f40612;
+        }
+
+        .movie-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .movie-card {
+            background-color: #222;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s;
+        }
+
+        .movie-card:hover {
+            transform: scale(1.05);
+        }
+
+        .poster-container img {
+            width: 100%;
+            height: auto;
+        }
+
+        .details-text-container {
+            padding: 10px;
+        }
+
+        .details-text-container h2 {
+            font-size: 18px;
+            margin: 10px 0 5px;
+            color: #e50914;
+        }
+
+        .details-text-container p {
+            font-size: 14px;
+            color: #b3b3b3;
+        }
+
+        .details-text-container a {
+            text-decoration: none;
+        }
+
+        .details-text-container a:hover h2 {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>List of Movie</h1>
+    <form class="search-container" action="/fetch-movie" method="POST">
+        <input type="text" id="searchTerm" name="searchTerm" placeholder="Search for a movie" required>
+        <button type="submit">Search</button>
+    </form>
+
+    <div class="movie-grid">
+        {{#each movieList}}
+        <div class="movie-card">
+            <div class="poster-container">
+                <img src="http://image.tmdb.org/t/p/original/{{this.poster_path}}" alt="{{this.title}} Poster">
+            </div>
+            <div class="details-text-container">
+                <a href="/addMovie/{{this.id}}">
+                    <h2>{{this.title}}</h2>
+                </a>
+                <p>{{this.overview}}</p>
+                <p><strong>Release Date:</strong> {{this.release_date}}</p>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+</body>
+</html>

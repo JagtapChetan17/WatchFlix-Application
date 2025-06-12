@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Movie List</title>
+    <link rel="icon" href="./logo.png">
+    <style>
+        /* General Styles */
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #141414;
+            color: #ffffff;
+        }
+
+        /* Header */
+        h1 {
+            text-align: center;
+            margin: 30px 0;
+            font-size: 2.5rem;
+            color: #e50914;
+        }
+
+        /* Dashboard Link */
+        .dashboard-link {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            display: flex;
+            align-items: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #e50914;
+            text-decoration: none;
+            padding: 10px 15px;
+            background-color: #222;
+            border-radius: 25px;
+            border: 2px solid #e50914;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .dashboard-link i {
+            font-size: 1.5rem;
+            margin-right: 8px;
+            transform: translateX(0);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .dashboard-link:hover {
+            background-color: #e50914;
+            color: #fff;
+            transform: scale(1.1);
+        }
+
+        .dashboard-link:hover i {
+            transform: translateX(-5px);
+        }
+
+        /* Movies Container */
+        .movies-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Movie Card */
+        .movie-card {
+            background-color: #222;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .movie-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.7);
+        }
+
+        .poster-container img {
+            width: 100%;
+            height: auto;
+            border-bottom: 2px solid #e50914;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .movie-card:hover .poster-container img {
+            transform: scale(1.1);
+        }
+
+        .details-container {
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .details-container h2 {
+            margin: 0 0 10px;
+            font-size: 1.5rem;
+            color: #e50914;
+        }
+
+        .details-container .overview {
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+            color: #bbb;
+        }
+
+        .details-container .release-date {
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #ccc;
+        }
+
+        /* Delete Button */
+        .delete-btn {
+            padding: 10px;
+            font-size: 1rem;
+            font-weight: bold;
+            color: #fff;
+            background-color: #e50914;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .delete-btn:hover {
+            background-color: #f40612;
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <!-- Dashboard Link -->
+    <a href="/" class="dashboard-link">
+        <i class="icon-arrow"></i> Go to Dashboard
+    </a>
+
+    <!-- Page Title -->
+    <h1>Delete Movie</h1>
+
+    <!-- Movies List Section -->
+    <div class="movies-container">
+        {{#each movies}}
+        <div class="movie-card">
+            <div class="poster-container">
+                <img src="http://image.tmdb.org/t/p/original/{{this.posterPath}}" alt="Movie Poster">
+            </div>
+            <div class="details-container">
+                <h2>{{this.title}}</h2>
+                <p class="overview">{{this.overview}}</p>
+                <p class="release-date">Release Date: {{this.releaseDate}}</p>
+                <form action="/delete-movie/{{this._id}}" method="post">
+                    <button class="delete-btn" type="submit">Delete</button>
+                </form>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+</body>
+</html>

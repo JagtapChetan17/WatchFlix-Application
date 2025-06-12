@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/updateMovieDetails.css">
+    <title>Update Movie Details</title>
+    <link rel="icon" href="./logo.png">
+</head>
+<body>
+    <h1>Update Movie Details</h1>
+    <!-- Dashboard Link -->
+    <a href="/" class="dashboard-link">
+        <i class="icon-home"></i> Go to Dashboard
+    </a>
+
+    <!-- Movie Details Section -->
+    <div class="movieDetailsContainer">
+        <div class="posterContainer">
+            <img src="http://image.tmdb.org/t/p/original/{{movie.posterPath}}" alt="Movie Poster">
+        </div>
+        <div class="detailTextContainer">
+            <h2>{{movie.title}}</h2>
+            <p style="font-size: 0.8em; margin-bottom: 5px">{{movie.overview}}</p>
+            <p style="font-size: 0.8em; font-weight: bold;">{{movie.releaseDate}} • {{movie.genres}} • {{movie.runtime}} mins</p>
+        </div>
+    </div>
+
+    <form class="formContainer" action="/update-movie/{{movie._id}}" method="POST">
+        <label for="id">ID:</label>
+        <input type="text" id="id" name="id" value="{{movie.id}}">
+
+        <label for="imovieID">MovieID:</label>
+        <input type="text" id="imovieID" name="movieID" value="{{movie.movieID}}">
+
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title" value="{{movie.title}}">
+
+        <label for="originalTitle">Original Title:</label>
+        <input type="text" id="originalTitle" name="originalTitle" value="{{movie.originalTitle}}">
+
+        <label for="overview">Overview:</label>
+        <input type="text" id="overview" name="overview" value="{{movie.overview}}">
+
+        <label for="ratings">Ratings:</label>
+        <input type="text" id="ratings" name="ratings" value="{{movie.ratings}}">
+
+        <label for="backdropPath">Backdrop Path:</label>
+        <input type="text" id="backdropPath" name="backdropPath" value="{{movie.backdropPath}}">
+
+        <label for="genreIds">Genre ID:</label>
+        <input type="text" id="genreIds" name="genreIds" value="{{movie.genreIds}}">
+
+        <label for="genres">Genres:</label>
+        <input type="text" id="genres" name="genres" value="{{movie.genres}}">
+
+        <label for="budget">Budget:</label>
+        <input type="text" id="budget" name="budget" value="{{movie.budget}}">
+
+        <label for="popularity">Popularity:</label>
+        <input type="text" id="popularity" name="popularity" value="{{movie.popularity}}">
+
+        <label for="posterPath">Poster Path:</label>
+        <input type="text" id="posterPath" name="posterPath" value="{{movie.posterPath}}">
+
+        <label for="productionCompanies">Production Companies:</label>
+        <input type="text" id="productionCompanies" name="productionCompanies" value="{{movie.productionCompanies}}">
+
+        <label for="releaseDate">Release Date:</label>
+        <input type="text" id="releaseDate" name="releaseDate" value="{{movie.releaseDate}}">
+
+        <label for="revenue">Revenue:</label>
+        <input type="text" id="revenue" name="revenue" value="{{movie.revenue}}">
+
+        <label for="runtime">Runtime:</label>
+        <input type="text" id="runtime" name="runtime" value="{{movie.runtime}}">
+
+        <label for="status">Status:</label>
+        <input type="text" id="status" name="status" value="{{movie.status}}">
+
+        <label for="watchProviders">Watch Providers:</label>
+        <input type="text" id="watchProviders" name="watchProviders" value="{{movie.watchProviders}}">
+
+        <label for="logos">Movie Logo:</label>
+        <input type="text" id="logos" name="logos" value="{{movie.logos}}">
+
+        <label for="downloadLink">Download Link:</label>
+        <input type="text" id="downloadLink" name="downloadLink" placeholder="Enter download link">
+
+        <button class="submit-btn" type="submit">Update Details</button>
+    </form>
+
+    <!-- Success and Error Messages -->
+    <div class="popup success" id="successPopup">
+        <p>Movie details submitted successfully!</p>
+    </div>
+
+    {{#if errorMessage}}
+    <div class="popup error">
+        <p>{{errorMessage}}</p>
+    </div>
+    {{/if}}
+
+    {{#if successMessage}}
+    <div class="popup success">
+        <p>{{successMessage}}</p>
+    </div>
+    {{/if}}
+
+    <script>
+    const successPopup = document.getElementById('successPopup');
+    if (successPopup) {
+        successPopup.classList.add('visible');
+        setTimeout(() => successPopup.classList.remove('visible'), 3000);
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Movie List</title>
+    <link rel="icon" href="./logo.png">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* General Styles */
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background-color: #141414;
+            color: #fff;
+        }
+
+        /* Header */
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 2.5rem;
+            color: #e50914;
+        }
+
+        /* Dashboard Link */
+        .dashboard-link {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            display: flex;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #e50914;
+            color: #fff;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .dashboard-link:hover {
+            background-color: #f40612;
+            transform: scale(1.1);
+        }
+
+        .dashboard-link i {
+            margin-right: 10px;
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .dashboard-link:hover i {
+            transform: translateX(-5px);
+        }
+
+        /* Movie Details Section */
+        .moviesDetailsContainer {
+            display: flex;
+            align-items: center;
+            background-color: #222;
+            margin: 20px auto;
+            max-width: 900px;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease;
+        }
+
+        .moviesDetailsContainer:hover {
+            transform: scale(1.02);
+        }
+
+        .posterContainer img {
+            width: 150px;
+            height: auto;
+            border-radius: 10px;
+            margin-right: 20px;
+        }
+
+        .detailsTextContainer {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .detailsTextContainer h2 {
+            color: #e50914;
+            margin: 0 0 10px;
+            font-size: 1.5rem;
+        }
+
+        .detailsTextContainer a {
+            text-decoration: none;
+            color: #e50914;
+            transition: color 0.3s ease;
+        }
+
+        .detailsTextContainer a:hover {
+            color: #f40612;
+        }
+
+        .detailsTextContainer p {
+            margin: 5px 0;
+            font-size: 1rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .moviesDetailsContainer {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .posterContainer img {
+                margin: 0 0 10px;
+            }
+
+            .detailsTextContainer {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Dashboard Link -->
+    <a href="/" class="dashboard-link">
+        <i>&larr;</i> Go to Dashboard
+    </a>
+
+    <!-- Page Title -->
+    <h1>Edit Movie List</h1>
+
+    <!-- Movie Details Section -->
+    {{#each movies}}
+    <div class="moviesDetailsContainer">
+        <div class="posterContainer">
+            <img src="http://image.tmdb.org/t/p/original/{{this.posterPath}}" alt="Movie Poster">
+        </div>
+        <div class="detailsTextContainer">
+            <a href="/movies/{{_id}}">
+                <h2>{{this.title}}</h2>
+            </a>
+            <p>{{this.overview}}</p>
+            <p><strong>Release Date:</strong> {{this.releaseDate}}</p>
+        </div>
+    </div>
+    {{/each}}
+</body>
+</html>

@@ -1,0 +1,203 @@
+/* Netflix Style CSS for Add Shows Page */
+
+/* General Styles */
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #121212;
+    color: #e5e5e5;
+    margin: 0;
+    padding: 0;
+}
+
+h1, h2, h3 {
+    font-weight: bold;
+}
+
+/* Dashboard Link */
+.dashboard-link {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    color: #fff;
+    text-decoration: none;
+    background-color: #e50914;
+    padding: 10px 15px;
+    border-radius: 50px;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s;
+    box-shadow: 0px 4px 15px rgba(229, 9, 20, 0.5);
+}
+
+.dashboard-link:hover {
+    transform: scale(1.1);
+    box-shadow: 0px 6px 20px rgba(229, 9, 20, 0.8);
+}
+
+.dashboard-link .icon-home {
+    margin-right: 8px;
+    font-size: 20px;
+}
+
+/* Page Title */
+.page-title {
+    text-align: center;
+    font-size: 36px;
+    margin-top: 80px;
+    margin-bottom: 20px;
+    color: #e50914;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Shows Details Section */
+.shows-details-container {
+    display: flex;
+    align-items: flex-start;
+    padding: 20px;
+    margin: 0 auto;
+    max-width: 1200px;
+    gap: 20px;
+    background-color: #181818;
+    border-radius: 10px;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.7);
+}
+
+.poster-container img {
+    max-width: 300px;
+    border-radius: 10px;
+}
+
+.detail-text-container {
+    flex: 1;
+}
+
+.detail-text-container p {
+    margin: 10px 0;
+    line-height: 1.6;
+    font-size: 16px;
+    color: #b3b3b3;
+}
+
+/* Seasons and Episodes */
+.season-container {
+    background-color: #202020;
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 1000px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.6);
+}
+
+.season-title {
+    color: #e50914;
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+.episode-details-container {
+    display: flex;
+    margin: 15px 0;
+    background-color: #292929;
+    border-radius: 5px;
+    padding: 15px;
+    gap: 15px;
+}
+
+.episode-poster-container img {
+    max-width: 120px;
+    border-radius: 5px;
+}
+
+.episode-text-container {
+    flex: 1;
+}
+
+.download-link-input {
+    display: block;
+    width: calc(100% - 20px);
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    margin-top: 10px;
+    background-color: #383838;
+    color: #fff;
+    outline: none;
+    transition: box-shadow 0.3s;
+}
+
+.download-link-input:focus {
+    box-shadow: 0px 0px 10px #e50914;
+}
+
+/* Add Shows Button */
+.submit-btn {
+    display: block;
+    background-color: #e50914;
+    color: #fff;
+    border: none;
+    padding: 15px 30px;
+    margin: 20px auto;
+    font-size: 18px;
+    font-weight: bold;
+    text-transform: uppercase;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s;
+    box-shadow: 0px 4px 15px rgba(229, 9, 20, 0.5);
+}
+
+.submit-btn:hover {
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0px 6px 25px rgba(229, 9, 20, 0.8);
+}
+
+/* Centered Popup Messages */
+.popup-error-message,
+.popup-success-messagee {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    background-color: rgba(0, 0, 0, 0.9);
+    color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 16px;
+    z-index: 1000;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.7);
+    animation: popupSlideIn 0.5s ease-out, popupFadeOut 3s 2.5s forwards;
+}
+
+.popup-error-message {
+    background-color: #e50914;
+}
+
+.popup-success-messagee {
+    background-color: #34c759;
+}
+
+/* Animation for popups */
+@keyframes popupSlideIn {
+    from {
+        transform: translate(-50%, -60%);
+        opacity: 0;
+    }
+    to {
+        transform: translate(-50%, -50%);
+        opacity: 1;
+    }
+}
+
+@keyframes popupFadeOut {
+    0%, 80% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        display: none;
+    }
+}

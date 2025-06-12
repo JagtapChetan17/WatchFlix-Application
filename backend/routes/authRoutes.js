@@ -1,0 +1,158 @@
+require('dotenv').config();
+const express = require('express')
+const router = express.Router();
+const passport = require('passport');
+const User = require('../models/User');
+const { message } = require('statuses');
+const { exec } = require('child_process');
+const { stderr } = require('process');
+
+const httpServerInfo = {
+    "username": process.env.HTTP_SERVER_USERNAME,
+    "password": process.env.HTTP_SERVER_PASSWORD,
+}
+
+//Endpoint to start the HTTP server
+router.get('/poweroff', (req, res) => {
+    exec('sudo poweroff', (error, stdout, stderr) => {
+        if (error) {
+            console.error(`exec error: ${error}`);
+            res.status(500).send('Error powering off the server');
+            return;
+        }
+        console.log(`stdout: ${stdout}`);
+        console.error(`stderr: ${stderr}`);
+        res.send('Server is powering off...');
+    });
+});
+
+//Endpoint to start the HTTP server
+router.get('/restart', (req, res) => {
+    exec('sudo reboot', (error, stdout, stderr) => {
+        if (error) {
+            console.error(`exec error: ${error}`);
+            res.status(500).send('Error restarting the server');
+            return;
+        }
+        console.log(`stdout: ${stdout}`);
+        console.error(`stderr: ${stderr}`);
+        res.send('Server is restarting...');
+    });
+})
+
+
+router.post('/register', async (req, res) => {
+    try {
+
+        const isAdmin = req.body.isAdmin === true;
+        const user = await User.register(new User({ username: req.body.username, isAdmin }), req.body.password);
+        passport.authenticate('local')(req, res, () => {
+            res.json({ success: true, user, httpServerInfo});
+        })
+
+    } catch (error) {
+        res.status(500).json({ success: false, error: error.message });
+    }
+})
+
+router.post('/login', (req, res, next) => {
+    passport.authenticate('local', (err, user, info) => {
+        if(err) {
+            return res.status(500).json({ sucess: false, error: err.message });
+        }
+        if (!user) {
+            return res.json({ success: false, message: 'Authentication failed' });
+        }
+
+        req.logIn(user, (loginErr) => {
+            if(loginErr) {
+                return res.status(500).json({ sucess: false, error: loginErr.message });
+            }
+
+            return res.json({ sucess: true, user, httpServerInfo });
+        })
+    })(req, res, next)
+});
+
+router.get('/check-auth', (req, res) => {
+    console.log("User auth", req.isAuthenticated)
+    if (req.isAuthenticated()) {
+        res.json({ authenticated: true, user: req.user, httpServerInfo });
+    }else {
+        res.json({ authenticated: false, user: null});
+    }
+})
+
+router.get('/logout', (req, res) => {
+    req.logout(err => {
+        if (err) {
+            return res.status(500).json({ sucess: false, error: err.message });
+        }
+        res.json({ sucess: true });
+    })
+})
+
+router.get('/admin/register', (req, res) => {
+    res.render('adminRegister')
+})
+
+router.post('/admin/register', async (req, res) => {
+    try{
+
+        const secretCode = req.body.secretCode;
+        if(secretCode !== 'abcd1234') {
+            return res.render('adminRegister', {errorMessage: 'Invalide secret code'});
+        }
+
+        const isAdmin = true;
+        const user = User.register(new User({ username: req.body.username, isAdmin}), req.body.password);
+        passport.authenticate('local')(req, res,() => {
+            res.json({sucess: true, user});
+            res.redirect('admin/login');
+        });
+
+    }catch (error) {
+        res.status(500).json({ sucess: false, error: error.message});
+    }
+})
+
+router.get('/admin/login', (req, res) => {
+    res.render('adminLogin')
+})
+
+router.post('/admin/login', (req, res, next) => {
+    passport.authenticate('local', (err, user, info) => {
+        if(err) {
+            return res.status(500).json({ sucess: false, error: err.message});
+        }
+
+        if(!user) {
+            return res.render('adminLogin', {errorMessage: 'Authentication failed'});
+        }
+
+        if(!user.isAdmin) {
+            return res.render('adminLogin', {errorMessage: 'you are not an admin'});
+        }
+
+        req.logIn(user, (loginErr) => {
+            if(loginErr) {
+                return res.status(500).json({success: false, error: loginErr.message});
+            }
+
+            
+            res.redirect('/')
+        })
+    })(req, res, next);
+})
+
+router.get('/admin/logout', (req, res) => {
+    req.logout(err => {
+        if(err) {
+            return res.status(500).json({ sucess: false, error: err.message});
+        }
+        res.redirect('/admin/login')
+    })
+})
+
+
+module.exports = router;
